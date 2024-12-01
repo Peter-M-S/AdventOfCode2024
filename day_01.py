@@ -1,6 +1,6 @@
 import os
 from time import perf_counter as pfc
-from AOC_input import get_input
+from tools.AOC_input import get_input
 
 DAY: int = int(os.path.basename(__file__)[4:6])
 

@@ -1,13 +1,13 @@
 import os
 import time
 from aocd import get_data
-from sessions import SESSIONS
+from tools.sessions import SESSIONS
 
 YEAR: int = time.localtime()[0]
 
 
 def get_input(day: int, year: int = YEAR) -> list:
-	file_name = f"day_{day:0>2}.txt"
+	file_name = f"data/day_{day:0>2}.txt"
 
 	if os.path.exists(file_name):
 		with open(file_name) as f:
