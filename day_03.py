@@ -4,8 +4,8 @@ from tools.AOC_input import get_input
 import re
 DAY: int = int(os.path.basename(__file__)[4:6])
 
-pattern1 = re.compile(r"mul\([0-9]{1,3},[0-9]{1,3}\)")
-pattern2 = re.compile(r"(mul\([0-9]{1,3},[0-9]{1,3}\)|do\(\)|don't\(\))")
+pattern1 = re.compile(r"mul\(\d+,\d+\)")
+pattern2 = re.compile(r"(mul\(\d+,\d+\)|do\(\)|don't\(\))")
 
 
 def solve(data: list, part1=False, part2=False):

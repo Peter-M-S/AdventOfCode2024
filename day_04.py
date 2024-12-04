@@ -8,6 +8,7 @@ w, h = len(grid[0]), len(grid)
 XMAS = {"XMAS", "SAMX"}
 for r in range(h):
     for c in range(w):
+        if grid[r][c] in "MA": continue
         hor = "".join([grid[r][c + i] for i in range(4) if c < w - 3])
         ver = "".join([grid[r + i][c] for i in range(4) if r < h - 3])
         dia1 = "".join([grid[r + i][c + i] for i in range(4) if r < h - 3 and c < w - 3])
@@ -18,7 +19,8 @@ print(part1)
 MAS = {"MAS", "SAM"}
 for r in range(1, h-1):
     for c in range(1, w-1):
-        dia1 = "".join([grid[r + i][c + i] for i in (-1, 0, 1)])
-        dia2 = "".join([grid[r + i][c - i] for i in (-1, 0, 1)])
-        part2 += (dia1 in MAS) and (dia2 in MAS)
+        if grid[r][c] != "A": continue
+        dia3 = "".join([grid[r + i][c + i] for i in (-1, 0, 1)])
+        dia4 = "".join([grid[r + i][c - i] for i in (-1, 0, 1)])
+        part2 += (dia3 in MAS) and (dia4 in MAS)
 print(part2)
