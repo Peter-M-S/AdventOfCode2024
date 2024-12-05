@@ -1,9 +1,6 @@
-import os
-from time import perf_counter as pfc
-from tools.AOC_input import get_input
-
-DAY: int = int(os.path.basename(__file__)[4:6])
-
+# copy data to test.txt and in.txt
+# aliases in terminal to run day_00.py:
+#   'aot' for test, 'aos' for puzzle input, 'aoc' to run both
 
 def is_safe(ls: list) -> bool:
     up: bool = ls[1] > ls[0]
@@ -21,36 +18,21 @@ def is_safe(ls: list) -> bool:
     return s
 
 
-def solve(data: list, part1=False, part2=False):
-    for r in data:
-        ls = list(map(int, r.split()))
+part1 = part2 = 0
+data = open(0).read().splitlines()
 
-        part1 += is_safe(ls)
-        if is_safe(ls):
+for r in data:
+    ls = list(map(int, r.split()))
+
+    part1 += is_safe(ls)
+    if is_safe(ls):
+        part2 += 1
+        continue
+    for i, l in enumerate(ls):
+        ls1 = ls[:i] + ls[i + 1:]
+        if is_safe(ls1):
             part2 += 1
-            continue
-        for i, l in enumerate(ls):
-            ls1 = ls[:i]+ls[i+1:]
-            if is_safe(ls1):
-                part2 += 1
-                break
-    return part1, part2
+            break
 
-
-def main(example):
-
-    if example:
-        with open("example.txt") as f:
-            data = f.read().split("\n")
-    else:
-        data: list = get_input(DAY)
-
-    start = pfc()
-    print(*solve(data))
-    print(f"{((pfc() - start) * 1000):5.1f} ms")
-    # part2 435 too low , 5?? too high
-
-
-if __name__ == '__main__':
-    # main(True)
-    main(False)
+print(part1)
+print(part2)

@@ -1,28 +1,28 @@
-import os
-from time import perf_counter as pfc
-from tools.AOC_input import get_input
+# copy data to test.txt and in.txt
+# aliases in terminal: 'aot' for test, 'aos' for puzzle input, 'aoc' to run both
 
-DAY: int = int(os.path.basename(__file__)[4:6])
+import re
+pattern1 = re.compile(r"mul\(\d+,\d+\)")
+pattern2 = re.compile(r"(mul\(\d+,\d+\)|do\(\)|don't\(\))")
+part1 = part2 = 0
+data = open(0).read().splitlines()
 
+for s in data:
+    m = re.findall(pattern1, s)
+    for e in m:
+        a, b = map(int, re.findall(r"\d+", e))
+        part1 += a * b
 
-def solve(data: list, part1=False, part2=False):
-    print(data[:10])
-    return part1, part2
+enable = True
+for s in data:
+    m = re.findall(pattern2, s)
+    for e in m:
+        if e in ("don't()", "do()"):
+            enable = e == "do()"
+            continue
+        if enable:
+            a, b = map(int, re.findall(r"\d+", e))
+            part2 += a * b
 
-
-def main(example):
-
-    if example:
-        with open("example.txt") as f:
-            data = f.read().split("\n")
-    else:
-        data: list = get_input(DAY)
-
-    start = pfc()
-    print(*solve(data))
-    print(f"{((pfc() - start) * 1000):5.1f} ms")
-
-
-if __name__ == '__main__':
-    main(True)
-    # main(False)
+print(part1)
+print(part2)

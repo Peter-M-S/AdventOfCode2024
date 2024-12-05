@@ -1,5 +1,6 @@
 # copy data to test.txt and in.txt
-# 'aot' in terminal for test, 'aos' for puzzle input, 'aoc' to run both
+# aliases in terminal to run day_00.py:
+#   'aot' for test, 'aos' for puzzle input, 'aoc' to run both
 
 part1 = part2 = 0
 data = open(0).read()
