@@ -32,8 +32,10 @@ while tuple(guard[:2]) in grid:
     guard = move(guard)
 part1 = len(visited)
 
-for pos in grid:
-    if pos in obstacles or pos == guard0: continue
+path_grid = {k: v for k, v in grid.items() if k in visited and k != tuple(guard0[:2])}
+# after this added it is a bit faster
+
+for pos in path_grid:   # obstacles and guard0 excluded already in path_grid
     obstacles.add(pos)
     guard = guard0
     seen = {guard}
@@ -42,7 +44,6 @@ for pos in grid:
         guard = move(guard)
         if guard in seen:   # found loop
             part2 += 1
-            # print(f"found loop for {pos}")
             break
     obstacles.remove(pos)
 
