@@ -4,60 +4,67 @@ import itertools
 import re
 
 part1 = part2 = 0
-data = open(0).read().splitlines()
+data = open(0)
 # with open("in.txt", "r") as f: data = f.readlines()
 # with open("test.txt", "r") as f: data = f.readlines()
 
-ops = ["*", "+", "|"]
+ops = (1, 2, 3)
+
+
+def calc(r, o, v) -> int:
+    if o == 1: return r * v
+    if o == 2: return r + v
+    return int(f"{r}{v}")
+
 
 for j, line in enumerate(data):
-    # print(j)
-    res, *vals = re.findall("\d+", line)
-    res = int(res)
+    print(j)
+    res, *vals = list(map(int, re.findall("\d+", line)))  # avoid str-operations
     ops_n = len(vals) - 1
     cache: dict = dict()
 
-    configs = ["".join(c) for c in itertools.product(ops[:2], repeat=ops_n)]
+    configs = list(itertools.product(ops[:2], repeat=ops_n))
     for config in configs:
-        right = int(vals[0])
+        r = vals[0]
         key = config
         while key:
-            if key in cache:    # found the longest existing key for this config
-                right = cache[key]
+            if key in cache:  # found the longest existing key for this config
+                r = cache[key]
                 config = config[len(key):]
                 break
             key = key[:-1]
 
-        for o, v in zip(config, vals[len(key)+1:]):
-            right = eval(str(right) + o + v)
-            key += o
-            cache[key] = right
-            if right > res: break   # cannot find a solution above res
+        for o, v in zip(config, vals[len(key) + 1:]):
+            r = calc(r, o, v)
+            key = tuple([*key, o])
+            cache[key] = r
+            if r > res: break  # cannot find a solution above res
 
-        if right == res:
+        if r == res:
             part1 += res
             break
 
-    configs = ["".join(c) for c in itertools.product(ops, repeat=ops_n)]
+    configs = list(itertools.product(ops, repeat=ops_n))
+    # keep the cache from part1
     for config in configs:
-        right = int(vals[0])
+        r = int(vals[0])
         key = config
         while key:
-            if key in cache:    # found the longest existing key for this config
-                right = cache[key]
+            if key in cache:  # found the longest existing key for this config
+                r = cache[key]
                 config = config[len(key):]
                 break
             key = key[:-1]
 
-        for o, v in zip(config, vals[len(key)+1:]):
-            right = int(str(right)+v) if o == "|" else eval(str(right) + o + v)
-            key += o
-            cache[key] = right
-            if right > res: break   # cannot find a solution above res
+        for o, v in zip(config, vals[len(key) + 1:]):
+            r = calc(r, o, v)
+            key = tuple([*key, o])
+            cache[key] = r
+            if r > res: break  # cannot find a solution above res
 
-        if right == res:
+        if r == res:
             part2 += res
             break
 
-print(part1)    # 4364915411363
-print(part2)    # 38322057216320
+print(part1)  # 4364915411363
+print(part2)  # 38322057216320
