@@ -2,7 +2,6 @@
 # aliases in terminal: 'aot' for test, 'aos' for puzzle input, 'aoc' to run both
 from collections import defaultdict, deque
 from heapq import heappush, heappop
-from traceback import print_tb
 
 part2 = 0
 # data = open(0).readlines()
