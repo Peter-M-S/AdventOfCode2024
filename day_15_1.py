@@ -1,6 +1,7 @@
 # copy data to test.txt and in.txt
 # aliases in terminal: 'aot' for test, 'aos' for puzzle input, 'aoc' to run both
 
+# not optimized solution, but working
 
 def show_grid(grid, rows, cols):
     for r in range(rows):
